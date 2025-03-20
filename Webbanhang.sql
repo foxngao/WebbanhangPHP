@@ -35,6 +35,13 @@ CREATE TABLE order_details (
  price DECIMAL(10, 2) NOT NULL,
  FOREIGN KEY (order_id) REFERENCES orders(id)
 );
+
+CREATE TABLE users (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ username VARCHAR(255) NOT NULL UNIQUE,
+ password VARCHAR(255) NOT NULL,
+ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 -- Chèn dữ liệu vào bảng category
 INSERT INTO category (name, description) VALUES
 ('Đồ uống', 'Danh mục các loại nước giải khát'),

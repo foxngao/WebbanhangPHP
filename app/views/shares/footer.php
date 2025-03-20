@@ -7,6 +7,9 @@
                 <p class="footer-text">
                     Hệ thống quản lý sản phẩm giúp bạn theo dõi và cập nhật thông tin sản phẩm dễ dàng.
                 </p>
+                <h5 class="footer-title">Thông tin liên hệ:</h5>
+                <p>hotline: 0359790618</p>
+                <P>Email: minhtienst77@gmail.com</P>
             </div>
             <!-- Cột liên kết nhanh -->
             <div class="col-lg-4 col-md-6 mb-4 text-center">
@@ -15,6 +18,7 @@
                     <li><a href="/Product/">Danh sách sản phẩm</a></li>
                     <li><a href="/Product/add">Thêm sản phẩm</a></li>
                     <li><a href="/Product/cart">Giỏ hàng</a></li>
+                    <li><a href="/account/register">Đăng ký tài khoản</a></li>
                 </ul>
             </div>
             <!-- Cột mạng xã hội -->
