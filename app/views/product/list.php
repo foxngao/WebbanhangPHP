@@ -1,7 +1,9 @@
 <?php include 'app/views/shares/header.php'; ?>
 <div class="container mt-5">
     <h1 class="form-title animate__animated animate__bounceInDown">Danh sách sản phẩm</h1>
+    <?php if (SessionHelper::isAdmin()): ?>
     <a href="/Product/add" class="btn btn-submit mb-4">Thêm sản phẩm mới</a>
+    <?php endif; ?>
     <ul class="list-group product-list">
         <?php foreach ($products as $product): ?>
         <li class="list-group-item product-item">
@@ -13,7 +15,9 @@
             <p>Giá: <?php echo htmlspecialchars($product->price, ENT_QUOTES, 'UTF-8'); ?> VND</p>
             <p>Danh mục: <?php echo htmlspecialchars($product->category_name, ENT_QUOTES, 'UTF-8'); ?></p>
             <div class="button-group">
+            <?php if (SessionHelper::isAdmin()): ?>
                 <a href="/Product/edit/<?php echo $product->id; ?>" class="btn btn-back">Sửa</a>
+                <?php endif; ?>
                 <a href="/Product/delete/<?php echo $product->id; ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
                 <a href="/Product/addToCart/<?php echo $product->id; ?>" class="btn btn-submit">Thêm vào giỏ hàng</a>
             </div>

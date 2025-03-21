@@ -151,9 +151,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/Product/">Danh sách sản phẩm</a>
                 </li>
+                <?php if (SessionHelper::isAdmin()): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/Product/add">Thêm sản phẩm</a>
                 </li>
+                <?php endif; ?>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <?php if (SessionHelper::isLoggedIn()): ?>

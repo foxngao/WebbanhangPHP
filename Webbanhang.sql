@@ -45,8 +45,8 @@ CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(20) NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin')),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   role ENUM('admin', 'user') DEFAULT 'user'
+ 
 );
 
 -- Chèn dữ liệu vào bảng category
@@ -57,9 +57,3 @@ INSERT INTO category (name, description) VALUES
 ('Đồ ăn vặt', 'Danh mục bánh kẹo, snack'),
 ('Hóa mỹ phẩm', 'Danh mục xà phòng, dầu gội, kem đánh răng');
 
--- Tạo chỉ mục để tối ưu hiệu suất
-CREATE INDEX idx_category_name ON category(name);
-CREATE INDEX idx_product_name ON product(name);
-CREATE INDEX idx_product_category_id ON product(category_id);
-CREATE INDEX idx_orders_created_at ON orders(created_at);
-CREATE INDEX idx_users_username ON users(username);

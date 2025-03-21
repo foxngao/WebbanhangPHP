@@ -16,7 +16,9 @@
                 <h5 class="footer-title">LIÊN KẾT NHANH</h5>
                 <ul class="footer-links">
                     <li><a href="/Product/">Danh sách sản phẩm</a></li>
+                    <?php if (SessionHelper::isAdmin()): ?>
                     <li><a href="/Product/add">Thêm sản phẩm</a></li>
+                    <?php endif; ?>
                     <li><a href="/Product/cart">Giỏ hàng</a></li>
                     <li><a href="/account/register">Đăng ký tài khoản</a></li>
                 </ul>

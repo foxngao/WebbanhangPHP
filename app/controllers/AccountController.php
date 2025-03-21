@@ -66,8 +66,8 @@ $pwd_hashed = $account->password;
 //check mat khau
 if (password_verify($password, $pwd_hashed)) {
 session_start();
-// $_SESSION['user_id'] = $account->id;
-// $_SESSION['user_role'] = $account->role;
+ $_SESSION['id'] = $account->id;
+ $_SESSION['role'] = $account->role;
 $_SESSION['username'] = $account->username;
 header('Location:/product');
 exit;
