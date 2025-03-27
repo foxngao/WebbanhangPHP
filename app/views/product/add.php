@@ -40,7 +40,7 @@
         </div>
         <button type="submit" class="btn btn-submit">Thêm sản phẩm</button>
     </form>
-    <a href="/Product/list" class="btn btn-back mt-3">Quay lại danh sách</a>
+    <a href="/Product" class="btn btn-back mt-3">Quay lại danh sách</a>
 </div>
 
 <style>
@@ -52,19 +52,19 @@
 }
 
 body {
-    background: linear-gradient(135deg, #ff6b6b, #4ecdc4); /* Gradient rực rỡ */
-    font-family: 'Poppins', sans-serif; /* Font hiện đại */
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    font-family: 'Poppins', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
 }
 
 /* Tiêu đề */
 .form-title {
-    font-size: 3rem;
+    font-size: 2.5rem; /* Giảm kích thước để cân đối */
     color: #fff;
     text-align: center;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    margin-bottom: 40px;
+    margin-bottom: 30px; /* Giảm khoảng cách */
     letter-spacing: 2px;
 }
 
@@ -76,25 +76,25 @@ body {
 /* Form sản phẩm */
 .product-form {
     background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
+    padding: 30px; /* Giảm padding để không quá rộng */
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    max-width: 700px;
+    max-width: 600px; /* Giảm chiều rộng để cân đối */
     margin: 0 auto;
     animation: slideUp 0.8s ease-out;
 }
 
 /* Nhóm form */
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 20px; /* Giảm khoảng cách giữa các trường */
     position: relative;
 }
 
 .form-group label {
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* Giảm kích thước chữ để cân đối */
     color: #2c3e50;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px; /* Giảm khoảng cách */
     display: block;
     transition: all 0.3s ease;
 }
@@ -102,8 +102,8 @@ body {
 /* Trường nhập liệu */
 .form-control {
     width: 100%;
-    padding: 15px;
-    font-size: 1.1rem;
+    padding: 12px; /* Giảm padding để không quá lớn */
+    font-size: 1rem; /* Đồng bộ kích thước chữ */
     border: 2px solid #ddd;
     border-radius: 10px;
     transition: all 0.4s ease;
@@ -118,21 +118,21 @@ body {
 }
 
 textarea.form-control {
-    min-height: 120px;
+    min-height: 100px; /* Giảm chiều cao để cân đối */
     resize: vertical;
 }
 
 .form-control-file {
-    padding: 10px 0;
+    padding: 8px 0; /* Giảm padding */
 }
 
 /* Nút Submit */
 .btn-submit {
     background: #ff6b6b;
     color: #fff;
-    font-size: 1.3rem;
+    font-size: 1.2rem; /* Giảm kích thước chữ */
     font-weight: bold;
-    padding: 15px;
+    padding: 12px; /* Giảm padding */
     border: none;
     border-radius: 50px;
     width: 100%;
@@ -153,8 +153,8 @@ textarea.form-control {
     text-align: center;
     background: #4ecdc4;
     color: #fff;
-    font-size: 1.2rem;
-    padding: 12px;
+    font-size: 1.1rem; /* Giảm kích thước chữ */
+    padding: 10px; /* Giảm padding */
     border-radius: 50px;
     text-decoration: none;
     transition: all 0.4s ease;
@@ -188,8 +188,8 @@ textarea.form-control {
         padding: 20px;
     }
     .btn-submit, .btn-back {
-        font-size: 1.1rem;
-        padding: 10px;
+        font-size: 1rem;
+        padding: 8px;
     }
 }
 </style>

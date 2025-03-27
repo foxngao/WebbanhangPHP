@@ -21,7 +21,6 @@
 <?php include 'app/views/shares/footer.php'; ?>
 
 <style>
-/* Kế thừa style từ add.php */
 body {
     background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
     font-family: 'Poppins', sans-serif;
@@ -30,11 +29,11 @@ body {
 }
 
 .form-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #fff;
     text-align: center;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     letter-spacing: 2px;
 }
 
@@ -44,32 +43,32 @@ body {
 
 .product-form {
     background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
+    padding: 30px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    max-width: 700px;
+    max-width: 600px;
     margin: 0 auto;
     animation: slideUp 0.8s ease-out;
 }
 
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     position: relative;
 }
 
 .form-group label {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #2c3e50;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     display: block;
     transition: all 0.3s ease;
 }
 
 .form-control {
     width: 100%;
-    padding: 15px;
-    font-size: 1.1rem;
+    padding: 12px;
+    font-size: 1rem;
     border: 2px solid #ddd;
     border-radius: 10px;
     transition: all 0.4s ease;
@@ -84,16 +83,16 @@ body {
 }
 
 textarea.form-control {
-    min-height: 120px;
+    min-height: 100px;
     resize: vertical;
 }
 
 .btn-submit {
     background: #ff6b6b;
     color: #fff;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    padding: 15px;
+    padding: 12px;
     border: none;
     border-radius: 50px;
     width: 100%;
@@ -113,8 +112,8 @@ textarea.form-control {
     text-align: center;
     background: #4ecdc4;
     color: #fff;
-    font-size: 1.2rem;
-    padding: 12px;
+    font-size: 1.1rem;
+    padding: 10px;
     border-radius: 50px;
     text-decoration: none;
     transition: all 0.4s ease;
@@ -146,8 +145,8 @@ textarea.form-control {
         padding: 20px;
     }
     .btn-submit, .btn-back {
-        font-size: 1.1rem;
-        padding: 10px;
+        font-size: 1rem;
+        padding: 8px;
     }
 }
 </style>

@@ -31,19 +31,21 @@
     </div>
 </div>
 <?php include 'app/views/shares/footer.php'; ?>
-
 <style>
 .product-detail {
     background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
+    padding: 30px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     animation: slideUp 0.8s ease-out;
 }
 
 .product-image {
+    max-width: 300px; /* Tăng kích thước hình ảnh */
     border-radius: 15px;
     transition: transform 0.3s ease;
+    margin: 0 auto; /* Căn giữa hình ảnh */
+    display: block;
 }
 
 .product-image:hover {
@@ -51,24 +53,24 @@
 }
 
 .product-title {
-    font-size: 2rem;
+    font-size: 1.8rem; /* Giảm kích thước để cân đối */
     color: #2c3e50;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .product-desc {
     color: #666;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    font-size: 1rem;
 }
 
 .product-price {
     font-size: 1.5rem;
     color: #ff6b6b;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
-/* Kế thừa style từ add.php */
 body {
     background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
     font-family: 'Poppins', sans-serif;
@@ -77,11 +79,11 @@ body {
 }
 
 .form-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #fff;
     text-align: center;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     letter-spacing: 2px;
 }
 
@@ -92,9 +94,9 @@ body {
 .btn-submit {
     background: #ff6b6b;
     color: #fff;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    padding: 15px;
+    padding: 10px 20px;
     border: none;
     border-radius: 50px;
     width: auto;
@@ -115,8 +117,8 @@ body {
 .btn-back {
     background: #4ecdc4;
     color: #fff;
-    font-size: 1.2rem;
-    padding: 12px;
+    font-size: 1.1rem;
+    padding: 10px 20px;
     border-radius: 50px;
     text-decoration: none;
     transition: all 0.4s ease;
@@ -147,9 +149,12 @@ body {
     .product-detail {
         padding: 20px;
     }
+    .product-image {
+        max-width: 200px;
+    }
     .btn-submit, .btn-back {
-        font-size: 1.1rem;
-        padding: 10px;
+        font-size: 1rem;
+        padding: 8px 15px;
     }
 }
 </style>

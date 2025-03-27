@@ -14,7 +14,7 @@
             <?php if ($item['image']): ?>
             <img src="/<?php echo $item['image']; ?>" alt="Product Image" style="max-width: 100px;">
             <?php endif; ?>
-            <p>Giá: <?php echo htmlspecialchars($item['price'], ENT_QUOTES, 'UTF-8'); ?> VND</p>
+            <p>Giá: <?php echo number_format($item['price'], 0, ',', '.'); ?>VND</p>
             <p>Số lượng: <?php echo htmlspecialchars($item['quantity'], ENT_QUOTES, 'UTF-8'); ?></p>
             <div class="quantity-controls">
                 <a href="/Product/decreaseQuantity/<?php echo $id; ?>" class="btn quantity-btn">-</a>
@@ -44,29 +44,38 @@
 
 .product-item {
     background: rgba(255, 255, 255, 0.95);
-    padding: 30px;
+    padding: 20px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
     animation: slideUp 0.8s ease-out;
     transition: transform 0.3s ease;
+    display: flex; /* Sử dụng flex để căn chỉnh */
+    align-items: center;
+    gap: 20px;
 }
 
 .product-item:hover {
     transform: translateY(-10px);
 }
 
+.product-item img {
+    max-width: 120px; /* Tăng kích thước hình ảnh */
+    border-radius: 10px;
+    object-fit: cover;
+}
+
 .quantity-controls {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 15px 0;
+    margin: 10px 0;
 }
 
 .quantity-btn {
     background: #4ecdc4;
     color: #fff;
-    padding: 5px 10px;
+    padding: 8px 12px; /* Tăng kích thước nút */
     border-radius: 50%;
     text-decoration: none;
     font-size: 1.2rem;
@@ -96,7 +105,6 @@
     border-radius: 10px;
 }
 
-/* Kế thừa style từ add.php */
 body {
     background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
     font-family: 'Poppins', sans-serif;
@@ -105,11 +113,11 @@ body {
 }
 
 .form-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #fff;
     text-align: center;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     letter-spacing: 2px;
 }
 
@@ -120,9 +128,9 @@ body {
 .btn-submit {
     background: #ff6b6b;
     color: #fff;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    padding: 15px;
+    padding: 10px 20px;
     border: none;
     border-radius: 50px;
     width: auto;
@@ -143,8 +151,8 @@ body {
 .btn-back {
     background: #4ecdc4;
     color: #fff;
-    font-size: 1.2rem;
-    padding: 12px;
+    font-size: 1.1rem;
+    padding: 10px 20px;
     border-radius: 50px;
     text-decoration: none;
     transition: all 0.4s ease;
@@ -160,10 +168,10 @@ body {
 .btn-danger {
     background: #e74c3c;
     color: #fff;
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 50px;
     transition: all 0.4s ease;
-    text-decoration: none;
+    font-size: 1.1rem;
 }
 
 .btn-danger:hover {
@@ -194,11 +202,16 @@ body {
         font-size: 2rem;
     }
     .product-item {
-        padding: 20px;
+        padding: 15px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .product-item img {
+        max-width: 100px;
     }
     .btn-submit, .btn-back, .btn-danger {
-        font-size: 1.1rem;
-        padding: 10px;
+        font-size: 1rem;
+        padding: 8px 15px;
     }
 }
 </style>

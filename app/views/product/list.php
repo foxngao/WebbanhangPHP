@@ -4,22 +4,28 @@
     <?php if (SessionHelper::isAdmin()): ?>
     <a href="/Product/add" class="btn btn-submit mb-4">Thêm sản phẩm mới</a>
     <?php endif; ?>
-    <ul class="list-group product-list">
+    <ul class="list-group product-list <?php echo SessionHelper::isAdmin() ? 'admin-view' : 'user-view'; ?>">
         <?php foreach ($products as $product): ?>
         <li class="list-group-item product-item">
-            <h2><a href="/Product/show/<?php echo $product->id; ?>" class="product-link"><?php echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?></a></h2>
-            <?php if ($product->image): ?>
-            <img src="/<?php echo $product->image; ?>" alt="Product Image" style="max-width: 100px;">
-            <?php endif; ?>
-            <p><?php echo htmlspecialchars($product->description, ENT_QUOTES, 'UTF-8'); ?></p>
-            <p>Giá: <?php echo htmlspecialchars($product->price, ENT_QUOTES, 'UTF-8'); ?> VND</p>
-            <p>Danh mục: <?php echo htmlspecialchars($product->category_name, ENT_QUOTES, 'UTF-8'); ?></p>
-            <div class="button-group">
-            <?php if (SessionHelper::isAdmin()): ?>
-                <a href="/Product/edit/<?php echo $product->id; ?>" class="btn btn-back">Sửa</a>
+            <div class="product-image">
+                <?php if ($product->image): ?>
+                <img src="/<?php echo $product->image; ?>" alt="Product Image">
                 <?php endif; ?>
-                <a href="/Product/delete/<?php echo $product->id; ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
-                <a href="/Product/addToCart/<?php echo $product->id; ?>" class="btn btn-submit">Thêm vào giỏ hàng</a>
+            </div>
+            <div class="product-info">
+                <h2><a href="/Product/show/<?php echo $product->id; ?>" class="product-link"><?php echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?></a></h2>
+                <p><?php echo htmlspecialchars($product->description, ENT_QUOTES, 'UTF-8'); ?></p>
+                <p>Giá: <?php echo number_format($product->price, 0, ',', '.'); ?>VND</p>
+                <p>Danh mục: <?php echo htmlspecialchars($product->category_name, ENT_QUOTES, 'UTF-8'); ?></p>
+                <div class="button-group">
+                    <?php if (SessionHelper::isAdmin()): ?>
+                        <a href="/Product/edit/<?php echo $product->id; ?>" class="btn btn-back">Sửa</a>
+                    <?php endif; ?>
+                    <?php if (SessionHelper::isAdmin()): ?>
+                    <a href="/Product/delete/<?php echo $product->id; ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
+                    <?php endif; ?>
+                    <a href="/Product/addToCart/<?php echo $product->id; ?>" class="btn btn-submit">Thêm vào giỏ hàng</a>
+                </div>
             </div>
         </li>
         <?php endforeach; ?>
@@ -28,24 +34,58 @@
 <?php include 'app/views/shares/footer.php'; ?>
 
 <style>
-/* Style cho trang chi tiết sản phẩm */
+/* Style chung cho danh sách sản phẩm */
 .product-list {
     list-style: none;
     padding: 0;
 }
 
-.product-item {
+/* Giao diện dạng cột (Admin) */
+.product-list.admin-view .product-item {
     background: rgba(255, 255, 255, 0.95);
-    padding: 30px;
+    padding: 20px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
     animation: slideUp 0.8s ease-out;
     transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Giao diện dạng lưới (User) */
+.product-list.user-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.product-list.user-view .product-item {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.8s ease-out;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .product-item:hover {
     transform: translateY(-10px);
+}
+
+.product-image img {
+    max-width: 120px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.product-info {
+    flex: 1;
 }
 
 .product-link {
@@ -62,14 +102,17 @@
     display: flex;
     gap: 10px;
     margin-top: 15px;
+    flex-wrap: wrap;
+    justify-content: center; /* Căn giữa các nút trong giao diện lưới */
 }
 
 .btn-danger {
     background: #e74c3c;
     color: #fff;
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 50px;
     transition: all 0.4s ease;
+    font-size: 1.1rem;
 }
 
 .btn-danger:hover {
@@ -78,7 +121,7 @@
     box-shadow: 0 10px 30px rgba(231, 76, 60, 0.7);
 }
 
-/* Style cho danh sách sản phẩm */
+/* Style chung */
 body {
     background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
     font-family: 'Poppins', sans-serif;
@@ -87,11 +130,11 @@ body {
 }
 
 .form-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #fff;
     text-align: center;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     letter-spacing: 2px;
 }
 
@@ -102,9 +145,9 @@ body {
 .btn-submit {
     background: #ff6b6b;
     color: #fff;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    padding: 15px;
+    padding: 10px 20px;
     border: none;
     border-radius: 50px;
     width: auto;
@@ -125,8 +168,8 @@ body {
 .btn-back {
     background: #4ecdc4;
     color: #fff;
-    font-size: 1.2rem;
-    padding: 12px;
+    font-size: 1.1rem;
+    padding: 10px 20px;
     border-radius: 50px;
     text-decoration: none;
     transition: all 0.4s ease;
@@ -137,6 +180,16 @@ body {
     background: #45b7aa;
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(69, 183, 170, 0.7);
+}
+
+.product-item h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.product-item p {
+    margin: 5px 0;
+    font-size: 1rem;
 }
 
 @keyframes slideUp {
@@ -154,12 +207,20 @@ body {
     .form-title {
         font-size: 2rem;
     }
-    .product-item {
-        padding: 20px;
+    .product-list.admin-view .product-item {
+        padding: 15px;
+        flex-direction: column;
+        align-items: flex-start;
     }
-    .btn-submit, .btn-back {
-        font-size: 1.1rem;
-        padding: 10px;
+    .product-list.user-view {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .product-item img {
+        max-width: 100px;
+    }
+    .btn-submit, .btn-back, .btn-danger {
+        font-size: 1rem;
+        padding: 8px 15px;
     }
 }
 </style>

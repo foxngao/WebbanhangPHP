@@ -22,6 +22,7 @@ public function index()
 $products = $this->productModel->getProducts();
 include 'app/views/product/list.php';
 }
+// Hiển thị chi tiết sản phẩm
 public function show($id)
 {
 $product = $this->productModel->getProductById($id);
@@ -31,6 +32,7 @@ include 'app/views/product/show.php';
 echo "Không thấy sản phẩm.";
 }
 }
+//thêm sản phẩm mới
 public function add() {
 if (!$this->isAdmin()) {
 echo "Bạn không có quyền truy cập chức năng này!";
@@ -39,6 +41,7 @@ exit;
 $categories = (new CategoryModel($this->db))->getCategories();
 include_once 'app/views/product/add.php';
 }
+// Lưu sản phẩm mới
 public function save()
 {
     if (!$this->isAdmin()) {
@@ -66,6 +69,7 @@ header('Location: /Product');
 }
 }
 }
+// Sửa sản phẩm
 public function edit($id)
 {
     if (!$this->isAdmin()) {
@@ -80,6 +84,7 @@ include 'app/views/product/edit.php';
 echo "Không thấy sản phẩm.";
 }
 }
+// Lưu sản phẩm sau khi sửa
 public function update()
 {
     if (!$this->isAdmin()) {
@@ -106,6 +111,7 @@ echo "Đã xảy ra lỗi khi lưu sản phẩm.";
 }
 }
 }
+// Xóa sản phẩm
 public function delete($id)
 {
     if (!$this->isAdmin()) {
@@ -118,6 +124,7 @@ header('Location: /Product');
 echo "Đã xảy ra lỗi khi xóa sản phẩm.";
 }
 }
+// Hàm tải lên hình ảnh
 private function uploadImage($file)
 {
 $target_dir = "uploads/";
@@ -147,8 +154,15 @@ throw new Exception("Có lỗi xảy ra khi tải lên hình ảnh.");
 }
 return $target_file;
 }
+// Thêm sản phẩm vào giỏ hàng
 public function addToCart($id)
 {
+    // Kiểm tra xem người dùng đã đăng nhập chưa
+if (!SessionHelper::isLoggedIn()) {
+    // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+    header('Location: /account/login');
+    exit;
+}
 $product = $this->productModel->getProductById($id);
 if (!$product) {
 echo "Không tìm thấy sản phẩm.";
@@ -167,17 +181,22 @@ $_SESSION['cart'][$id] = [
 'image' => $product->image
 ];
 }
+
+
 header('Location: /Product/cart');
 }
+// Hiển thị giỏ hàng
 public function cart()
 {
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 include 'app/views/product/cart.php';
 }
+// Thanh toán
 public function checkout()
 {
 include 'app/views/product/checkout.php';
 }
+// Xử lý đơn hàng
 public function processCheckout()
 {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -226,6 +245,7 @@ echo "Đã xảy ra lỗi khi xử lý đơn hàng: " . $e->getMessage();
 }
 }
 }
+// Xác nhận đơn hàng
 public function orderConfirmation()
 {
 include 'app/views/product/orderConfirmation.php';
@@ -260,6 +280,23 @@ include 'app/views/product/orderConfirmation.php';
         }
         header('Location: /Product/cart');
     }
+    // Tìm kiếm sản phẩm
+    public function search()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['keyword'])) {
+            $keyword = trim($_GET['keyword']);
+            
+            if (!empty($keyword)) {
+                $products = $this->productModel->searchProducts($keyword);
+                include 'app/views/product/list.php';
+                return;
+            }
+        }
+        
+        // Nếu không có từ khóa hoặc từ khóa rỗng, chuyển hướng về trang danh sách
+        header('Location: /Product');
+    }
+    
 }
 
 ?>

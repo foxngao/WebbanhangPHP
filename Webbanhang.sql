@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS product (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
     description TEXT,
-    price DECIMAL(10,2) NOT NULL,
+    price DECIMAL(100,2) NOT NULL,
     image VARCHAR(255) DEFAULT 'default_image.jpg',
     category_id INT,
     FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS order_details (
     order_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    price DECIMAL(100, 2) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
 );

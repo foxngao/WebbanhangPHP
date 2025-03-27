@@ -30,6 +30,7 @@ $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_OBJ);
 return $result;
 }
+
 public function addProduct($name, $description, $price, $category_id, $image)
 {
 $errors = [];
@@ -101,4 +102,20 @@ return true;
 }
 return false;
 }
+// Tìm kiếm sản phẩm theo tên hoặc mô tả
+public function searchProducts($keyword)
+{
+    $query = "SELECT p.id, p.name, p.description, p.price, p.image, c.name as category_name
+              FROM " . $this->table_name . " p
+              LEFT JOIN category c ON p.category_id = c.id
+              WHERE p.name LIKE :keyword OR p.description LIKE :keyword
+              ORDER BY p.name";
+    
+    $stmt = $this->conn->prepare($query);
+    $searchKeyword = '%' . $keyword . '%';
+    $stmt->bindParam(':keyword', $searchKeyword);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
 }

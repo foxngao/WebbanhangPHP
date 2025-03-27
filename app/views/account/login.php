@@ -1,7 +1,7 @@
 <?php include 'app/views/shares/header.php'; ?>
-<section class="vh-100 gradient-custom">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+<section class="vh-auto gradient-custom">
+    <div class="container py-5 h-auto">
+        <div class="row d-flex justify-content-center align-items-center h-auto">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card product-form">
                     <div class="card-body p-5 text-center">
@@ -46,7 +46,7 @@
 <style>
 /* CSS */
 body {
-    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4); /* Giữ gradient vui tươi */
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
@@ -65,80 +65,90 @@ body {
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     animation: slideUp 0.8s ease-out;
+    max-width: 500px; /* Giảm chiều rộng để cân đối hơn */
+    margin: 0 auto; /* Căn giữa */
+    padding: 30px; /* Tăng padding cho không gian thoáng */
 }
 
 .form-title-login {
-    font-size: 2.5rem;
+    font-size: 2rem; /* Giảm kích thước để cân đối */
     color: #2c3e50;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Giảm khoảng cách dưới */
     letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.text-muted {
+    font-size: 1rem; /* Đồng bộ kích thước chữ */
+    margin-bottom: 25px; /* Tăng khoảng cách cho thoáng */
 }
 
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 20px; /* Giảm khoảng cách giữa các trường */
     position: relative;
 }
 
 .form-group label {
-    font-size: 1.2rem;
+    font-size: 1.1rem; /* Giảm kích thước chữ cho cân đối */
     color: #2c3e50;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px; /* Giảm khoảng cách */
     display: block;
     transition: all 0.3s ease;
 }
 
 .form-control {
     width: 100%;
-    padding: 15px;
-    font-size: 1.1rem;
+    padding: 12px; /* Giảm padding để không quá lớn */
+    font-size: 1rem; /* Đồng bộ kích thước chữ */
     border: 2px solid #ddd;
     border-radius: 10px;
     transition: all 0.4s ease;
-    background: #f9f9f9;
+    background: #fff9f0; /* Màu nền nhẹ nhàng*/
 }
 
 .form-control:focus {
-    border-color: #ff6b6b;
-    box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+    border-color: #ff9f1c; /* Màu cam vui tươi thay vì hồng */
+    box-shadow: 0 0 15px rgba(255, 159, 28, 0.5);
     outline: none;
     background: #fff;
 }
 
 .btn-submit {
-    background: #ff6b6b;
+    background: #ff9f1c; /* Chuyển sang màu cam nổi bật */
     color: #fff;
-    font-size: 1.3rem;
+    font-size: 1.2rem; /* Giảm kích thước chữ */
     font-weight: bold;
-    padding: 15px;
+    padding: 12px; /* Giảm padding */
     border: none;
     border-radius: 50px;
     width: 100%;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 5px 20px rgba(255, 107, 107, 0.5);
+    box-shadow: 0 5px 20px rgba(255, 159, 28, 0.5);
 }
 
 .btn-submit:hover {
-    background: #e74c3c;
+    background: #ff851a; /* Màu cam đậm hơn khi hover */
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(231, 76, 60, 0.7);
+    box-shadow: 0 10px 30px rgba(255, 133, 26, 0.7);
 }
 
 /* Mạng xã hội */
 .social-login {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px; /* Giảm khoảng cách giữa các icon */
+    margin-top: 20px;
 }
 
 .social-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: 45px; /* Giảm kích thước icon */
+    height: 45px;
     background: #fff;
     border-radius: 50%;
     transition: all 0.4s ease;
@@ -146,14 +156,24 @@ body {
 }
 
 .social-icon-img {
-    width: 70%;
-    height: 70%;
+    width: 60%; /* Giảm kích thước ảnh trong icon */
+    height: 60%;
     object-fit: contain;
 }
 
 .social-icon:hover {
-    background: #ffd700;
-    transform: rotate(360deg) scale(1.2);
+    background: #ff9f1c; /* Đồng bộ màu cam khi hover */
+    transform: scale(1.1); /* Hiệu ứng phóng to nhẹ */
+}
+
+/* Căn chỉnh liên kết "Đăng ký" */
+.mt-4 {
+    margin-top: 20px !important; /* Giảm khoảng cách */
+}
+
+.text-muted.fw-bold {
+    color: #ff9f1c !important; /* Màu cam cho liên kết */
+    font-weight: 600;
 }
 
 @keyframes slideUp {
@@ -169,7 +189,7 @@ body {
 
 @media (max-width: 768px) {
     .form-title-login {
-        font-size: 2rem;
+        font-size: 1.8rem; /* Giảm kích thước trên mobile */
     }
     .product-form {
         padding: 20px;
@@ -183,8 +203,8 @@ body {
         height: 40px;
     }
     .social-icon-img {
-        width: 70%;
-        height: 70%;
+        width: 60%;
+        height: 60%;
     }
 }
 </style>

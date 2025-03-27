@@ -11,22 +11,30 @@
 <style>
 .confirmation-message {
     background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
+    padding: 30px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     text-align: center;
-    max-width: 700px;
+    max-width: 600px;
     margin: 0 auto;
     animation: slideUp 0.8s ease-out;
 }
 
 .confirmation-message p {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #2c3e50;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-/* Kế thừa style từ add.php */
+.confirmation-message p::before {
+    content: "🎉"; /* Thêm biểu tượng cảm xúc */
+    font-size: 1.5rem;
+}
+
 body {
     background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
     font-family: 'Poppins', sans-serif;
@@ -35,11 +43,11 @@ body {
 }
 
 .form-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #fff;
     text-align: center;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     letter-spacing: 2px;
 }
 
@@ -52,12 +60,14 @@ body {
     text-align: center;
     background: #4ecdc4;
     color: #fff;
-    font-size: 1.2rem;
-    padding: 12px;
+    font-size: 1.1rem;
+    padding: 10px 20px;
     border-radius: 50px;
     text-decoration: none;
     transition: all 0.4s ease;
     box-shadow: 0 5px 20px rgba(78, 205, 196, 0.5);
+    max-width: 300px; /* Giới hạn chiều rộng nút */
+    margin: 0 auto; /* Căn giữa */
 }
 
 .btn-back:hover {
@@ -85,8 +95,8 @@ body {
         padding: 20px;
     }
     .btn-back {
-        font-size: 1.1rem;
-        padding: 10px;
+        font-size: 1rem;
+        padding: 8px 15px;
     }
 }
 </style>
