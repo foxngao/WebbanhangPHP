@@ -117,5 +117,4 @@ public function searchProducts($keyword)
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
-
 }

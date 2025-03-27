@@ -14,7 +14,7 @@
             </div>
             <div class="product-info">
                 <h2><a href="/Product/show/<?php echo $product->id; ?>" class="product-link"><?php echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?></a></h2>
-                <p><?php echo htmlspecialchars($product->description, ENT_QUOTES, 'UTF-8'); ?></p>
+                <p>Mô Tả: <?php echo htmlspecialchars($product->description, ENT_QUOTES, 'UTF-8'); ?></p>
                 <p>Giá: <?php echo number_format($product->price, 0, ',', '.'); ?>VND</p>
                 <p>Danh mục: <?php echo htmlspecialchars($product->category_name, ENT_QUOTES, 'UTF-8'); ?></p>
                 <div class="button-group">

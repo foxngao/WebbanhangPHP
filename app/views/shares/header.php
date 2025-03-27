@@ -176,6 +176,23 @@ body {
     min-width: 200px;
 }
 
+/* Category menu */
+.category-menu {
+    position: relative;
+}
+
+.category-menu .nav-link {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.category-menu .dropdown-menu {
+    min-width: 200px;
+}
+
 /* User dropdown */
 .user-menu {
     position: relative;
@@ -286,6 +303,11 @@ body {
         font-size: 1rem;
     }
 
+    .category-menu .nav-link {
+        font-size: 0.85rem;
+        padding: 6px 12px;
+    }
+
     .user-menu .nav-link {
         font-size: 0.85rem;
         padding: 6px 12px;
@@ -300,7 +322,8 @@ body {
                 <img src="https://via.placeholder.com/150x40?text=FoxSNAC" alt="FoxSNAC">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <!-- <span class="navbar-toggler-icon"><img src="/images/social-icons/menu-burger.png">
+            </span> -->
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
@@ -314,6 +337,31 @@ body {
                             <?php if (SessionHelper::isAdmin()): ?>
                                 <a class="dropdown-item" href="/Product/add">Thêm sản phẩm</a>
                             <?php endif; ?>
+                        </div>
+                    </li>
+                    <!-- Thêm nút Danh mục -->
+                    <li class="nav-item category-menu">
+                        <a class="nav-link" href="#" id="categoryMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-list"></i> Danh mục
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="categoryMenu">
+                            <?php
+                            // Khởi tạo CategoryModel để lấy danh sách danh mục
+                            require_once('app/config/database.php');
+                            require_once('app/models/CategoryModel.php');
+                            $db = (new Database())->getConnection();
+                            $categoryModel = new CategoryModel($db);
+                            $categories = $categoryModel->getCategories();
+                            if ($categories) {
+                                foreach ($categories as $category) {
+                                    // Chuyển đổi tên danh mục thành dạng URL-friendly
+                                    $categorySlug = urlencode($category->name);
+                                    echo '<a class="dropdown-item" href="/Product/category/' . $category->id . '">' . htmlspecialchars($category->name, ENT_QUOTES, 'UTF-8') . '</a>';
+                                }
+                            } else {
+                                echo '<a class="dropdown-item" href="#">Không có danh mục</a>';
+                            }
+                            ?>
                         </div>
                     </li>
                 </ul>
