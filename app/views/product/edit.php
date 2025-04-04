@@ -1,6 +1,10 @@
 <?php include 'app/views/shares/header.php'; ?>
+
 <div class="container mt-5">
+    <!-- CẬP NHẬT: Thay đổi tiêu đề và thêm class animate -->
     <h1 class="form-title animate__animated animate__bounceInDown">Sửa sản phẩm</h1>
+    
+    <!-- CẬP NHẬT: Thêm hiển thị lỗi nếu có -->
     <?php if (!empty($errors)): ?>
         <div class="alert alert-danger animate__animated animate__shakeX">
             <ul>
@@ -10,23 +14,30 @@
             </ul>
         </div>
     <?php endif; ?>
-    <form method="POST" action="/Product/update" enctype="multipart/form-data" class="product-form" onsubmit="return validateForm();">
-        <input type="hidden" name="id" value="<?php echo $product->id; ?>">
+    
+    <!-- CẬP NHẬT: Cập nhật form với action, method POST, enctype và class mới -->
+    <form method="POST" action="/Product/update" enctype="multipart/form-data" class="product-form" id="edit-product-form" onsubmit="return validateForm();">
+        <!-- CẬP NHẬT: Sử dụng dữ liệu từ PHP thay vì fetch API -->
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($product->id, ENT_QUOTES, 'UTF-8'); ?>">
         <div class="form-group">
             <label for="name">Tên sản phẩm:</label>
+            <!-- CẬP NHẬT: Thêm placeholder và giá trị từ PHP -->
             <input type="text" id="name" name="name" class="form-control" placeholder="Nhập tên sản phẩm" value="<?php echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?>" required>
         </div>
         <div class="form-group">
             <label for="description">Mô tả:</label>
+            <!-- CẬP NHẬT: Thêm placeholder, rows và giá trị từ PHP -->
             <textarea id="description" name="description" class="form-control" placeholder="Nhập mô tả sản phẩm" rows="4" required><?php echo htmlspecialchars($product->description, ENT_QUOTES, 'UTF-8'); ?></textarea>
         </div>
         <div class="form-group">
             <label for="price">Giá:</label>
+            <!-- CẬP NHẬT: Thêm placeholder và giá trị từ PHP -->
             <input type="number" id="price" name="price" class="form-control" step="0.01" placeholder="Nhập giá sản phẩm (VD: 100000)" value="<?php echo htmlspecialchars($product->price, ENT_QUOTES, 'UTF-8'); ?>" required>
         </div>
         <div class="form-group">
             <label for="category_id">Danh mục:</label>
             <select id="category_id" name="category_id" class="form-control" required>
+                <!-- CẬP NHẬT: Thêm option mặc định và danh mục từ PHP -->
                 <option value="">Chọn danh mục</option>
                 <?php foreach ($categories as $category): ?>
                     <option value="<?php echo $category->id; ?>" <?php echo $category->id == $product->category_id ? 'selected' : ''; ?>>
@@ -35,19 +46,50 @@
                 <?php endforeach; ?>
             </select>
         </div>
+        <!-- CẬP NHẬT: Thêm trường upload hình ảnh và hiển thị ảnh hiện tại -->
         <div class="form-group">
             <label for="image">Hình ảnh:</label>
             <input type="file" id="image" name="image" class="form-control-file">
-            <input type="hidden" name="existing_image" value="<?php echo $product->image; ?>">
+            <input type="hidden" name="existing_image" value="<?php echo htmlspecialchars($product->image, ENT_QUOTES, 'UTF-8'); ?>">
             <?php if ($product->image): ?>
-                <img src="/<?php echo $product->image; ?>" alt="Product Image" class="img-thumbnail mt-2" style="max-width: 100px;">
+                <img src="/<?php echo htmlspecialchars($product->image, ENT_QUOTES, 'UTF-8'); ?>" alt="Product Image" class="img-thumbnail mt-2" style="max-width: 100px;">
             <?php endif; ?>
         </div>
+        <!-- CẬP NHẬT: Thay đổi class nút -->
         <button type="submit" class="btn btn-submit">Lưu thay đổi</button>
     </form>
+    <!-- CẬP NHẬT: Thay đổi class nút và đường dẫn -->
     <a href="/Product" class="btn btn-back mt-3">Quay lại danh sách</a>
 </div>
+
 <?php include 'app/views/shares/footer.php'; ?>
+
+<script>
+function validateForm() {
+    const name = document.getElementById('name').value;
+    const description = document.getElementById('description').value;
+    const price = document.getElementById('price').value;
+    const category = document.getElementById('category_id').value;
+
+    if (name.trim() === '') {
+        alert('Tên sản phẩm không được để trống');
+        return false;
+    }
+    if (description.trim() === '') {
+        alert('Mô tả không được để trống');
+        return false;
+    }
+    if (price <= 0) {
+        alert('Giá phải lớn hơn 0');
+        return false;
+    }
+    if (category === '') {
+        alert('Vui lòng chọn danh mục');
+        return false;
+    }
+    return true;
+}
+</script>
 
 <style>
 body {
@@ -160,8 +202,8 @@ textarea.form-control {
 }
 
 .img-thumbnail {
-    max-width: 120px; /* Tăng kích thước hình ảnh */
-    border-radius: 10px; /* Bo góc cho dễ thương */
+    max-width: 120px;
+    border-radius: 10px;
     margin-top: 10px;
 }
 

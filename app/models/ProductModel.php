@@ -65,32 +65,36 @@ return true;
 return false;
 }
 public function updateProduct(
-$id,
-$name,
-$description,
-$price,
-$category_id,
-$image
+    $id,
+    $name,
+    $description,
+    $price,
+    $category_id,
+    $image
 ) {
-$query = "UPDATE " . $this->table_name . " SET name=:name,
-description=:description, price=:price, category_id=:category_id, image=:image WHERE
-id=:id";
-$stmt = $this->conn->prepare($query);
-$name = htmlspecialchars(strip_tags($name));
-$description = htmlspecialchars(strip_tags($description));
-$price = htmlspecialchars(strip_tags($price));
-$category_id = htmlspecialchars(strip_tags($category_id));
-$image = htmlspecialchars(strip_tags($image));
-$stmt->bindParam(':id', $id);
-$stmt->bindParam(':name', $name);
-$stmt->bindParam(':description', $description);
-$stmt->bindParam(':price', $price);
-$stmt->bindParam(':category_id', $category_id);
-$stmt->bindParam(':image', $image);
-if ($stmt->execute()) {
-return true;
-}
-return false;
+    $query = "UPDATE " . $this->table_name . " SET name=:name, description=:description, price=:price, category_id=:category_id, image=:image WHERE id=:id";
+    $stmt = $this->conn->prepare($query);
+
+    // Làm sạch dữ liệu
+    $name = htmlspecialchars(strip_tags($name));
+    $description = htmlspecialchars(strip_tags($description));
+    $price = htmlspecialchars(strip_tags($price));
+    $category_id = htmlspecialchars(strip_tags($category_id));
+    $image = htmlspecialchars(strip_tags($image));
+
+    // Bind tất cả các tham số
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':price', $price);
+    $stmt->bindParam(':category_id', $category_id);
+    $stmt->bindParam(':image', $image);
+
+    // Thực thi và kiểm tra kết quả
+    if ($stmt->execute()) {
+        return true;
+    }
+    return false;
 }
 public function deleteProduct($id)
 {

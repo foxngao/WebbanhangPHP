@@ -1,37 +1,76 @@
 <?php include 'app/views/shares/header.php'; ?>
 <div class="container mt-5">
+    <!-- CẬP NHẬT: Thay đổi tiêu đề và thêm class animate -->
     <h1 class="form-title animate__animated animate__bounceInDown">Danh sách sản phẩm</h1>
+    
+    <!-- CẬP NHẬT: Kiểm tra quyền admin và thay đổi class nút -->
     <?php if (SessionHelper::isAdmin()): ?>
-    <a href="/Product/add" class="btn btn-submit mb-4">Thêm sản phẩm mới</a>
+        <a href="/Product/add" class="btn btn-submit mb-4">Thêm sản phẩm mới</a>
     <?php endif; ?>
-    <ul class="list-group product-list <?php echo SessionHelper::isAdmin() ? 'admin-view' : 'user-view'; ?>">
-        <?php foreach ($products as $product): ?>
-        <li class="list-group-item product-item">
-            <div class="product-image">
-                <?php if ($product->image): ?>
-                <img src="/<?php echo $product->image; ?>" alt="Product Image">
-                <?php endif; ?>
-            </div>
-            <div class="product-info">
-                <h2><a href="/Product/show/<?php echo $product->id; ?>" class="product-link"><?php echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?></a></h2>
-                <p>Mô Tả: <?php echo htmlspecialchars($product->description, ENT_QUOTES, 'UTF-8'); ?></p>
-                <p>Giá: <?php echo number_format($product->price, 0, ',', '.'); ?>VND</p>
-                <p>Danh mục: <?php echo htmlspecialchars($product->category_name, ENT_QUOTES, 'UTF-8'); ?></p>
-                <div class="button-group">
-                    <?php if (SessionHelper::isAdmin()): ?>
-                        <a href="/Product/edit/<?php echo $product->id; ?>" class="btn btn-back">Sửa</a>
-                    <?php endif; ?>
-                    <?php if (SessionHelper::isAdmin()): ?>
-                    <a href="/Product/delete/<?php echo $product->id; ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
-                    <?php endif; ?>
-                    <a href="/Product/addToCart/<?php echo $product->id; ?>" class="btn btn-submit">Thêm vào giỏ hàng</a>
-                </div>
-            </div>
-        </li>
-        <?php endforeach; ?>
+    
+    <!-- CẬP NHẬT: Thêm class động dựa trên quyền admin/user -->
+    <ul class="list-group product-list <?php echo SessionHelper::isAdmin() ? 'admin-view' : 'user-view'; ?>" id="product-list">
+        <!-- Danh sách sản phẩm sẽ được tải từ API và hiển thị tại đây -->
     </ul>
 </div>
 <?php include 'app/views/shares/footer.php'; ?>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/api/product')
+        .then(response => response.json())
+        .then(data => {
+            const productList = document.getElementById('product-list');
+            data.forEach(product => {
+                const productItem = document.createElement('li');
+                // CẬP NHẬT: Thay đổi class cho product-item
+                productItem.className = 'list-group-item product-item';
+                // CẬP NHẬT: Cấu trúc HTML mới với hình ảnh và nút chức năng
+                productItem.innerHTML = `
+                    <div class="product-image">
+                        ${product.image ? `<img src="/${product.image}" alt="${product.name}">` : ''}
+                    </div>
+                    <div class="product-info">
+                        <h2><a href="/Product/show/${product.id}" class="product-link">${product.name}</a></h2>
+                        <p>Mô Tả: ${product.description}</p>
+                        <!-- CẬP NHẬT: Định dạng giá tiền theo kiểu Việt Nam -->
+                        <p>Giá: ${parseFloat(product.price).toLocaleString('vi-VN')} VND</p>
+                        <p>Danh mục: ${product.category_name}</p>
+                        <div class="button-group">
+                            <?php if (SessionHelper::isAdmin()): ?>
+                                <!-- CẬP NHẬT: Thay đổi class nút Sửa và Xóa -->
+                                <a href="/Product/edit/${product.id}" class="btn btn-back">Sửa</a>
+                                <button class="btn btn-danger" onclick="deleteProduct(${product.id})">Xóa</button>
+                            <?php endif; ?>
+                            <!-- CẬP NHẬT: Thêm nút Thêm vào giỏ hàng -->
+                            <a href="/Product/addToCart/${product.id}" class="btn btn-submit">Thêm vào giỏ hàng</a>
+                        </div>
+                    </div>
+                `;
+                productList.appendChild(productItem);
+            });
+        })
+        .catch(error => console.error('Lỗi khi lấy sản phẩm:', error));
+});
+
+// CẬP NHẬT: Cải thiện logic xóa sản phẩm để kiểm tra phản hồi chính xác hơn
+function deleteProduct(id) {
+    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+        fetch(`/api/product/${id}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Product deleted successfully') {
+                location.reload();
+            } else {
+                alert('Xóa sản phẩm thất bại: ' + (data.message || 'Lỗi không xác định'));
+            }
+        })
+        .catch(error => console.error('Lỗi khi xóa sản phẩm:', error));
+    }
+}
+</script>
 
 <style>
 /* Style chung cho danh sách sản phẩm */
