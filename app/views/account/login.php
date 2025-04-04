@@ -43,6 +43,35 @@
 </section>
 <?php include 'app/views/shares/footer.php'; ?>
 
+
+<script>
+document.getElementById('login-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const formData = new FormData(this);
+  const jsonData = {};
+  formData.forEach((value, key) => {
+    jsonData[key] = value;
+  });
+  fetch('/account/checkLogin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(jsonData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.token) {
+      localStorage.setItem('jwtToken', data.token);
+      location.href = '/Product';
+    } else {
+      alert('Đăng nhập thất bại');
+    }
+  })
+  .catch(error => console.error('Lỗi khi đăng nhập:', error));
+});
+</script>
+
 <style>
 /* CSS */
 body {

@@ -15,62 +15,60 @@
 </div>
 <?php include 'app/views/shares/footer.php'; ?>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('/api/product')
-        .then(response => response.json())
-        .then(data => {
-            const productList = document.getElementById('product-list');
-            data.forEach(product => {
-                const productItem = document.createElement('li');
-                // CẬP NHẬT: Thay đổi class cho product-item
-                productItem.className = 'list-group-item product-item';
-                // CẬP NHẬT: Cấu trúc HTML mới với hình ảnh và nút chức năng
-                productItem.innerHTML = `
-                    <div class="product-image">
-                        ${product.image ? `<img src="/${product.image}" alt="${product.name}">` : ''}
-                    </div>
-                    <div class="product-info">
-                        <h2><a href="/Product/show/${product.id}" class="product-link">${product.name}</a></h2>
-                        <p>Mô Tả: ${product.description}</p>
-                        <!-- CẬP NHẬT: Định dạng giá tiền theo kiểu Việt Nam -->
-                        <p>Giá: ${parseFloat(product.price).toLocaleString('vi-VN')} VND</p>
-                        <p>Danh mục: ${product.category_name}</p>
-                        <div class="button-group">
-                            <?php if (SessionHelper::isAdmin()): ?>
-                                <!-- CẬP NHẬT: Thay đổi class nút Sửa và Xóa -->
-                                <a href="/Product/edit/${product.id}" class="btn btn-back">Sửa</a>
-                                <button class="btn btn-danger" onclick="deleteProduct(${product.id})">Xóa</button>
-                            <?php endif; ?>
-                            <!-- CẬP NHẬT: Thêm nút Thêm vào giỏ hàng -->
-                            <a href="/Product/addToCart/${product.id}" class="btn btn-submit">Thêm vào giỏ hàng</a>
-                        </div>
-                    </div>
-                `;
-                productList.appendChild(productItem);
-            });
-        })
-        .catch(error => console.error('Lỗi khi lấy sản phẩm:', error));
-});
+<script> 
+document.addEventListener("DOMContentLoaded", function() { 
+    const token = localStorage.getItem('jwtToken'); 
+    if (!token) { 
+        alert('Vui lòng đăng nhập'); 
+        location.href = '/account/login'; // Điều hướng đến trang đăng nhập 
+        return; 
+    } 
+    fetch('/api/product', { 
+        method: 'GET', 
+        headers: { 
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + token 
+        } 
+    }) 
+        .then(response => response.json()) 
+        .then(data => { 
 
-// CẬP NHẬT: Cải thiện logic xóa sản phẩm để kiểm tra phản hồi chính xác hơn
-function deleteProduct(id) {
-    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
-        fetch(`/api/product/${id}`, {
-            method: 'DELETE'
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message === 'Product deleted successfully') {
-                location.reload();
-            } else {
-                alert('Xóa sản phẩm thất bại: ' + (data.message || 'Lỗi không xác định'));
-            }
-        })
-        .catch(error => console.error('Lỗi khi xóa sản phẩm:', error));
-    }
-}
-</script>
+ 
+            const productList = document.getElementById('product-list'); 
+            data.forEach(product => { 
+                const productItem = document.createElement('li'); 
+                productItem.className = 'list-group-item'; 
+                productItem.innerHTML = ` 
+                    <h2><a 
+href="/Product/show/${product.id}">${product.name}</a></h2> 
+                    <p>${product.description}</p> 
+                    <p>Giá: ${product.price} VND</p> 
+                    <p>Danh mục: ${product.category_name}</p> 
+                    <a href="/Product/edit/${product.id}" class="btn btn
+warning">Sửa</a> 
+                    <button class="btn btn-danger" 
+onclick="deleteProduct(${product.id})">Xóa</button> 
+                `; 
+                productList.appendChild(productItem); 
+            }); 
+        }); 
+}); 
+function deleteProduct(id) { 
+    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) { 
+        fetch(`/api/product/${id}`, { 
+            method: 'DELETE' 
+        }) 
+        .then(response => response.json()) 
+        .then(data => { 
+            if (data.message === 'Product deleted successfully') { 
+                location.reload(); 
+            } else { 
+                alert('Xóa sản phẩm thất bại'); 
+            } 
+        }); 
+    } 
+} 
+</script> 
 
 <style>
 /* Style chung cho danh sách sản phẩm */

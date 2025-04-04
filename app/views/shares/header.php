@@ -427,6 +427,23 @@ body {
             </div>
         </div>
     </nav>
+    <script> 
+    function logout() { 
+        localStorage.removeItem('jwtToken'); 
+        location.href = '/account/login'; 
+    } 
+ 
+    document.addEventListener("DOMContentLoaded", function() { 
+        const token = localStorage.getItem('jwtToken'); 
+        if (token) { 
+            document.getElementById('nav-login').style.display = 'none'; 
+            document.getElementById('nav-logout').style.display = 'block'; 
+        } else { 
+            document.getElementById('nav-login').style.display = 'block'; 
+            document.getElementById('nav-logout').style.display = 'none'; 
+        } 
+    }); 
+    </script>
     <div class="container mt-4">
 
     <script>
